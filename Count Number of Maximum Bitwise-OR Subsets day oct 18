@@ -73,3 +73,15 @@ class Solution {
         return countSubsets(0, currOr, nums, maxOr, t);
     }
 }
+
+
+###############    GFG SINGLE NUMBER     ################
+class Solution {
+    int getSingle(int arr[]) {
+        int goal = 0;
+        for(int i = 0; i < arr.length; i++){
+            goal = goal ^ arr[i];
+        }
+        return goal;
+    }
+}
