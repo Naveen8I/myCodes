@@ -1,0 +1,89 @@
+############### GFG #################
+
+Expected Time Complexity: O(n*logk)
+Expected Auxiliary Space: O(k)
+
+class Solution {
+    public DLLNode sortAKSortedDLL(DLLNode head, int k) {
+        if (head == null) return head;
+        
+        // Min-heap to store nodes
+        PriorityQueue<DLLNode> minHeap = new PriorityQueue<>((a, b) -> a.data - b.data);
+        DLLNode newHead = null, last = null;
+        
+        DLLNode current = head;
+        // Add first k+1 elements to the min-heap
+        for (int i = 0; current != null && i <= k; i++) {
+            minHeap.add(current);
+            current = current.next;
+        }
+        
+        // Process the list by polling from the min-heap
+        while (!minHeap.isEmpty()) {
+            DLLNode minNode = minHeap.poll();
+            
+            if (newHead == null) {
+                newHead = minNode;  // This becomes the new head
+                newHead.prev = null;
+                last = newHead;
+            } else {
+                last.next = minNode;
+                minNode.prev = last;
+                last = minNode;
+            }
+            
+            // Add the next node from the unsorted part of the list to the heap
+            if (current != null) {
+                minHeap.add(current);
+                current = current.next;
+            }
+        }
+        
+        // Make sure the last node points to null
+        if (last != null) {
+            last.next = null;
+        }
+        
+        return newHead;
+    }
+}
+
+################### LEETCODE #############
+T.C : O(n)
+S.C : O(n)
+class Solution {
+
+    public boolean parseBoolExpr(String expression) {
+        Stack<Character> stack = new Stack<>();
+
+        for (char c : expression.toCharArray()) {
+            if (c == ')') {
+                boolean hasTrue = false;
+                boolean hasFalse = false;
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    char el = stack.pop();
+                    if (el == 't') {
+                        hasTrue = true;
+                    } else if (el == 'f') {
+                        hasFalse = true;
+                    }
+                }
+                stack.pop(); // '(' popped out
+                char op = stack.pop();
+                boolean res = false;
+                if (op == '&') {
+                    res = !hasFalse;
+                } else if (op == '|') {
+                    res = hasTrue;
+                } else if (op == '!') {
+                    res = !hasTrue;
+                }
+                stack.push(res ? 't' : 'f');
+            } else if (c != ',') {
+                stack.push(c);
+            }
+        }
+         return stack.peek() == 't';
+    }
+
+}
