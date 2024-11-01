@@ -1,0 +1,55 @@
+class Solution {
+    public String makeFancyString(String s) {
+      if(s.length() < 3){
+        return s;
+      }
+      
+      StringBuilder result = new StringBuilder();
+      result.append(s.charAt(0));
+      result.append(s.charAt(1));
+
+      for(int i = 2; i < s.length(); i++){
+        char curr = s.charAt(i);
+            char prev1 = result.charAt(result.length() - 1);
+            char prev2 = result.charAt(result.length() - 2);
+
+            // Only add the character if it does not create three consecutive identical characters
+            if (!(curr == prev1 && curr == prev2)) {
+                result.append(curr);
+      }
+      }
+      return result.toString();
+    }
+}
+
+#######################  GFG ########################
+
+
+class Solution {
+    public long maxSum(Long[] arr) {
+       Arrays.sort(arr);
+        int n = arr.length;
+
+        // Rearrange elements in alternating smallest-largest order
+        Long[] rearranged = new Long[n];
+        int left = 0, right = n - 1;
+        int index = 0;
+
+        // Arrange in a way that maximizes absolute difference
+        while (left <= right) {
+            if (index % 2 == 0) {
+                rearranged[index++] = arr[left++];
+            } else {
+                rearranged[index++] = arr[right--];
+            }
+        }
+
+        // Calculate the sum of absolute differences
+        long maxSum = 0;
+        for (int i = 0; i < n; i++) {
+            maxSum += Math.abs(rearranged[i] - rearranged[(i + 1) % n]);
+        }
+
+        return maxSum; 
+    }
+}
