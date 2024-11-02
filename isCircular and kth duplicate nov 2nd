@@ -1,0 +1,40 @@
+class Solution:
+    def isCircularSentence(self, s: str) -> bool:
+        words = s.split()
+        
+        # Check if the first character of the first word and the last character of the last word are the same
+        if words[0][0] != words[-1][-1]:
+            return False
+
+        # Check if each word's last character matches the first character of the next word
+        for i in range(1, len(words)):
+            if words[i-1][-1] != words[i][0]:
+                return False
+
+        return True
+######################### GFG #########################
+
+class Solution {
+    public boolean checkDuplicatesWithinK(int[] arr, int k) {
+       HashSet<Integer> s = new HashSet<>();
+
+        // Iterate over each element in the array
+        for (int i = 0; i < arr.length; i++) {
+            // If the current element is already in the set, we found a duplicate within k distance
+            if (s.contains(arr[i])) {
+                return true;
+            }
+
+            // Add the current element to the set
+            s.add(arr[i]);
+
+            // Maintain the set size to be at most k by removing the (i - k)th element if i >= k
+            if (i >= k) {
+                s.remove(arr[i - k]);
+            }
+        }
+        
+        return false; // No duplicates found within k distance
+       
+    }
+}
