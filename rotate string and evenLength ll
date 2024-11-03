@@ -1,0 +1,14 @@
+if len(s) != len(goal):
+            return False
+        return goal in (s + s)
+###################### GFG ####################
+class Solution {
+    public boolean isLengthEven(Node head) {
+        int n = 0;
+        while(head != null){
+            n += 1;
+            head = head.next;
+        }
+        return n % 2 == 0;
+    }
+}
