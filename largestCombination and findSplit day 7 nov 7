@@ -1,0 +1,65 @@
+class Solution {
+    public int largestCombination(int[] candidates) {
+        int result = 0;
+
+        for (int i = 0; i < 24; i++) { // O(24)
+            int countIth = 0;
+
+            for (int num : candidates) { // O(n)
+                if ((num & (1 << i)) != 0) {
+                    countIth++;
+                }
+            }
+
+            result = Math.max(result, countIth);
+        }
+
+        return result;
+    }
+}
+
+###################### GFG ####################
+
+class Solution {
+
+    public List<Integer> findSplit(int[] arr) {
+        // Return an array of possible answer, driver code will judge and return true or
+        // false based on
+        int totalSum = 0;
+
+        // Step 1: Calculate the total sum of the array
+        for (int num : arr) {
+            totalSum += num;
+        }
+
+        // Step 2: If total sum is not divisible by 3, we can't split it
+        if (totalSum % 3 != 0) {
+            return Arrays.asList(-1, -1);
+        }
+
+        int targetSum = totalSum / 3;
+        int currentSum = 0;
+        int count = 0;
+        List<Integer> result = new ArrayList<>();
+
+        // Step 3: Traverse the array to find indices for splitting
+        for (int i = 0; i < arr.length; i++) {
+            currentSum += arr[i];
+
+            // Check if we reached one part with the target sum
+            if (currentSum == targetSum) {
+                result.add(i);
+                currentSum = 0; // Reset for the next segment
+                count++;
+
+                // We need only two indices to split into three parts
+                if (count == 2) {
+                    return result;
+                }
+            }
+        }
+
+        // If we couldn’t find two valid split points, return [-1, -1]
+        return Arrays.asList(-1, -1);
+    }
+}
