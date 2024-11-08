@@ -1,0 +1,32 @@
+class Solution:
+    def getMaximumXor(self, nums: List[int], mB: int) -> List[int]:
+        prefix_xor = 0
+        for i in range(len(nums)):
+            prefix_xor ^= nums[i]
+
+        maxBit = (1 << mB) - 1
+        result = []
+
+        # Iterate in reverse, as we want to remove the last element of prefix XOR one by one
+        for i in range(len(nums) - 1, -1, -1):
+            result.append(prefix_xor ^ maxBit)  # Append the result of XOR with maxBit
+            prefix_xor ^= nums[i]  # Remove the last element from prefix XOR
+
+        return result       
+        
+######################## GFG #####################
+class Solution {
+  public:
+    int minRepeats(string& s1, string& s2) {
+        string temp=s1;
+        int count=1;
+        while(s1.size()<s2.size()){
+            s1=s1+temp;
+            count++;
+        }
+        if(s1.find(s2)!=-1) return count;
+        s1=s1+temp;
+        count++;
+        if(s1.find(s2)!=-1) return count;
+        return -1;
+   
